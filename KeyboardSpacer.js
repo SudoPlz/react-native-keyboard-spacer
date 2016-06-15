@@ -42,6 +42,7 @@ export default class KeyboardSpacer extends Component {
       }
     },
     onToggle: () => null,
+    android: true
   };
 
   constructor(props, context) {
@@ -102,6 +103,5 @@ export default class KeyboardSpacer extends Component {
   }
 }
 
-KeyboardSpacer.defaultProps = { android: true };
 
 module.exports = KeyboardSpacer;
