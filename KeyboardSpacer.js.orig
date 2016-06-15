@@ -10,6 +10,14 @@ import {
   StyleSheet
 } from 'react-native';
 
+<<<<<<< HEAD
+var {
+    Keyboard,
+    LayoutAnimation,
+    View,
+    Platform
+} = ReactNative;
+=======
 const styles = StyleSheet.create({
   container: {
     left: 0,
@@ -17,6 +25,7 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
 });
+>>>>>>> f42712a1a4f9886f399ce5e213b7cd65deaa09c9
 
 export default class KeyboardSpacer extends Component {
   static propTypes = {
@@ -56,15 +65,12 @@ export default class KeyboardSpacer extends Component {
   }
 
   componentDidMount() {
-    const isAndroid = (Platform.OS === 'android');
-    const updateListener =  isAndroid? 'keyboardDidShow' : 'keyboardWillShow';
-    const resetListener = isAndroid ? 'keyboardDidHide' : 'keyboardWillHide';
-    if((isAndroid && this.props.android) || !isAndroid){
-        this._listeners = [
-          Keyboard.addListener(updateListener, this.updateKeyboardSpace),
-          Keyboard.addListener(resetListener, this.resetKeyboardSpace)
-        ];
-    }
+    const updateListener = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
+    const resetListener = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
+    this._listeners = [
+      Keyboard.addListener(updateListener, this.updateKeyboardSpace),
+      Keyboard.addListener(resetListener, this.resetKeyboardSpace)
+    ];
   }
 
   componentWillUpdate(props, state) {
@@ -77,9 +83,24 @@ export default class KeyboardSpacer extends Component {
     this._listeners.forEach(listener => listener.remove());
   }
 
+<<<<<<< HEAD
+    componentDidMount() {
+        if (Platform.OS == "android" && this.props.android) {
+            this._listeners = [
+                Keyboard.addListener('keyboardDidShow', this.updateKeyboardSpace),
+                Keyboard.addListener('keyboardDidHide', this.resetKeyboardSpace)
+            ];
+        } else {
+            this._listeners = [
+                Keyboard.addListener('keyboardWillShow', this.updateKeyboardSpace),
+                Keyboard.addListener('keyboardWillHide', this.resetKeyboardSpace)
+            ];
+        }
+=======
   updateKeyboardSpace(frames) {
     if (!frames.endCoordinates) {
       return;
+>>>>>>> f42712a1a4f9886f399ce5e213b7cd65deaa09c9
     }
     const keyboardSpace = frames.endCoordinates.height + this.props.topSpacing;
     this.setState({
@@ -88,6 +109,24 @@ export default class KeyboardSpacer extends Component {
     }, this.props.onToggle(true, keyboardSpace));
   }
 
+<<<<<<< HEAD
+    componentWillUnmount() {
+        this._listeners && this._listeners.forEach(function(/** EmitterSubscription */listener) {
+            listener.remove();
+        });
+    }
+
+    render() {
+      if (Platform.OS === 'android' && !this.props.android) { return null; }
+
+      return (<View style={[{height: this.state.keyboardSpace, left: 0, right: 0, bottom: 0}, this.props.style]}/>);
+    }
+}
+
+KeyboardSpacer.defaultProps = { android: true };
+
+module.exports = KeyboardSpacer;
+=======
   resetKeyboardSpace() {
     this.setState({
       keyboardSpace: 0,
@@ -96,12 +135,8 @@ export default class KeyboardSpacer extends Component {
   }
 
   render() {
-    if (Platform.OS === 'android' && !this.props.android) { return null; }
     return (
       <View style={[styles.container, { height: this.state.keyboardSpace }, this.props.style]} />);
   }
 }
-
-KeyboardSpacer.defaultProps = { android: true };
-
-module.exports = KeyboardSpacer;
+>>>>>>> f42712a1a4f9886f399ce5e213b7cd65deaa09c9
