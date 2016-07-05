@@ -75,7 +75,9 @@ export default class KeyboardSpacer extends Component {
   }
 
   componentWillUnmount() {
-    this._listeners.forEach(listener => listener.remove());
+    if(this._listeners!=null){
+      this._listeners.forEach(listener => listener.remove());  
+    }
   }
 
   updateKeyboardSpace(frames) {
